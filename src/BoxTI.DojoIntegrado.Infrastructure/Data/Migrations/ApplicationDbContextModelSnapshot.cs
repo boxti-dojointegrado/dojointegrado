@@ -52,18 +52,9 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
             modelBuilder.Entity("BoxTI.DojoIntegrado.Domain.Entities.Company", b =>
                 {
                     b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizationId1")
                         .HasColumnType("int");
 
                     b.HasKey("OrganizationId");
-
-                    b.HasIndex("OrganizationId1");
 
                     b.ToTable("Companies");
                 });
@@ -71,18 +62,9 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
             modelBuilder.Entity("BoxTI.DojoIntegrado.Domain.Entities.Ngo", b =>
                 {
                     b.Property<int>("OrganizationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrganizationId1")
                         .HasColumnType("int");
 
                     b.HasKey("OrganizationId");
-
-                    b.HasIndex("OrganizationId1");
 
                     b.ToTable("Ngos");
                 });
@@ -149,8 +131,8 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
             modelBuilder.Entity("BoxTI.DojoIntegrado.Domain.Entities.Company", b =>
                 {
                     b.HasOne("BoxTI.DojoIntegrado.Domain.Entities.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId1")
+                        .WithOne("Company")
+                        .HasForeignKey("BoxTI.DojoIntegrado.Domain.Entities.Company", "OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -160,8 +142,8 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
             modelBuilder.Entity("BoxTI.DojoIntegrado.Domain.Entities.Ngo", b =>
                 {
                     b.HasOne("BoxTI.DojoIntegrado.Domain.Entities.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId1")
+                        .WithOne("Ngo")
+                        .HasForeignKey("BoxTI.DojoIntegrado.Domain.Entities.Ngo", "OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -177,6 +159,15 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("BoxTI.DojoIntegrado.Domain.Entities.Organization", b =>
+                {
+                    b.Navigation("Company")
+                        .IsRequired();
+
+                    b.Navigation("Ngo")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

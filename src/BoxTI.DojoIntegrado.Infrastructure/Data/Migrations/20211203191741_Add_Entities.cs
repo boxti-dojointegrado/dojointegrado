@@ -38,7 +38,6 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    AddressId = table.Column<int>(type: "int", nullable: false),
                     Phone = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     CorporateName = table.Column<string>(type: "longtext", nullable: false)
@@ -48,7 +47,8 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
                     Cnpj = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AddressId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,16 +67,13 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     OrganizationId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    OrganizationId1 = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.OrganizationId);
                     table.ForeignKey(
-                        name: "FK_Companies_Organizations_OrganizationId1",
-                        column: x => x.OrganizationId1,
+                        name: "FK_Companies_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -88,31 +85,18 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     OrganizationId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    OrganizationId1 = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Ngos", x => x.OrganizationId);
                     table.ForeignKey(
-                        name: "FK_Ngos_Organizations_OrganizationId1",
-                        column: x => x.OrganizationId1,
+                        name: "FK_Ngos_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Companies_OrganizationId1",
-                table: "Companies",
-                column: "OrganizationId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Ngos_OrganizationId1",
-                table: "Ngos",
-                column: "OrganizationId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organizations_AddressId",
