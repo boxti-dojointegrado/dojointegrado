@@ -2,7 +2,9 @@
 using BoxTI.DojoIntegrado.API.Models.Response;
 using BoxTI.DojoIntegrado.Domain.Entities;
 using BoxTI.DojoIntegrado.Domain.Interfaces;
+using BoxTI.DojoIntegrado.Services.TokenService;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace BoxTI.DojoIntegrado.API.Controllers
 {
@@ -12,11 +14,16 @@ namespace BoxTI.DojoIntegrado.API.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _passwordHasher;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IUserRepository userRepository, IPasswordHasher passwordHasher)
+        public AuthController(
+            IUserRepository userRepository, 
+            IPasswordHasher passwordHasher, 
+            ITokenService tokenService)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -39,7 +46,19 @@ namespace BoxTI.DojoIntegrado.API.Controllers
 
             await _userRepository.Create(newUser);
 
-            return Ok(new UserResponse(registerRequest.Email));
+            return Ok(new UserResponse(registerRequest.Email, _tokenService.GenerateToken(newUser)));
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserResponse>> Login([FromBody] LoginRequest loginRequest)
+        {
+            var logedinUser = await _userRepository.GetByEmail(loginRequest.Email);
+            if (logedinUser is null) return Unauthorized();
+
+            var isCorrectPassword = _passwordHasher.VerifyPassword(loginRequest.Password, logedinUser.Password);
+            if (isCorrectPassword) return Ok(new UserResponse(logedinUser.Email, _tokenService.GenerateToken(logedinUser)));
+
+            return Unauthorized();
         }
 
         private static bool PasswordDontMatchWithConfirmation(RegisterRequest registerRequest)
