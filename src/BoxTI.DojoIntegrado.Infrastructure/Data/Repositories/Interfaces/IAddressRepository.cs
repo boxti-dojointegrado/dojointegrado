@@ -2,7 +2,7 @@
 
 namespace BoxTI.DojoIntegrado.Infrastructure.Data.Repositories.Interfaces
 {
-    public interface IAddressRepository
+    public interface IAddressRepository : IDisposable
     {
         Task<Address> GetByIdAsync(int id);
         Task AddAsync(Address address);
