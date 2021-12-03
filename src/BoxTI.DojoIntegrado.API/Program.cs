@@ -1,3 +1,4 @@
+using BoxTI.DojoIntegrado.API.Configurations;
 using BoxTI.DojoIntegrado.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,10 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var connectionString = builder.Configuration.GetConnectionString("dojointegradodb");
+builder.Configuration
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json", true, true)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json")
+    .AddEnvironmentVariables();
 
-builder.Services.AddDbContext<ApplicationDbContext>(
-    options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
+builder.Services.AddAuthConfig(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
