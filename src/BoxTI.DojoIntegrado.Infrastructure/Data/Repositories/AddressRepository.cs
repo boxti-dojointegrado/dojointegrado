@@ -13,7 +13,7 @@ public class AddressRepository : IAddressRepository
     }
 
     public async Task<Address> GetByIdAsync(int id)
-        => await _context.Addresses.FindAsync(id);
+        => await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
     public async Task AddAsync(Address address)
     {
