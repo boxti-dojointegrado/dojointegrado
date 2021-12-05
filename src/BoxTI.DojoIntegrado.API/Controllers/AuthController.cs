@@ -2,9 +2,7 @@
 using BoxTI.DojoIntegrado.API.Models.Response;
 using BoxTI.DojoIntegrado.Domain.Entities;
 using BoxTI.DojoIntegrado.Domain.Interfaces;
-using BoxTI.DojoIntegrado.Services.TokenService;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace BoxTI.DojoIntegrado.API.Controllers
 {

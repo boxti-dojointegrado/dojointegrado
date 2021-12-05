@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BoxTI.DojoIntegrado.Domain\BoxTI.DojoIntegrado.Domain.csproj" />
+    <ProjectReference Include="..\BoxTI.DojoIntegrado.Infrastructure\BoxTI.DojoIntegrado.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

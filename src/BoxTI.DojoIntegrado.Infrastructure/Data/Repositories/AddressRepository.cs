@@ -12,6 +12,8 @@ public class AddressRepository : IAddressRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Address>> GetAllAsync() => await _context.Addresses.ToListAsync();
+
     public async Task<Address> GetByIdAsync(int id)
         => await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
 
