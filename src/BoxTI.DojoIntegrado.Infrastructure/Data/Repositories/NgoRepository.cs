@@ -11,6 +11,9 @@ public class NgoRepository : INgoRepository
         _context = context;
     }
 
+    public async Task<IEnumerable<Ngo>> GetAllAsync()
+        => await _context.Ngos.AsNoTracking().ToListAsync();
+
     public async Task<Ngo> GetByIdAsync(int id)
         => await _context.Ngos
         .AsNoTracking()

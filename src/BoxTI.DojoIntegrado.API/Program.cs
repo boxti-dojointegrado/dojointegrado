@@ -11,6 +11,7 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 builder.Services.AddAuthConfig(builder.Configuration);
+builder.Services.AddServicesConfig();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
