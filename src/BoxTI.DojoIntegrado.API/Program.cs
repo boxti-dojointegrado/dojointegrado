@@ -10,6 +10,17 @@ builder.Configuration
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json")
     .AddEnvironmentVariables();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowEveryone",
+        builder =>
+        {
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
+            builder.AllowAnyOrigin();
+        });
+});
+
 builder.Services.AddAuthConfig(builder.Configuration);
 builder.Services.AddServicesConfig();
 
@@ -30,6 +41,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowEveryone");
 
 app.UseAuthConfig();
 
