@@ -1,8 +1,8 @@
 ﻿namespace BoxTI.DojoIntegrado.Services.DTOs
 {
-    public class OrganizationDTO
+    public class GetOrganizationDTO
     {
-        public bool IsCompany { get; set; }
+        public int Id { get; set; }
         public string Phone { get; set; }
         public string CorporateName { get; set; }
         public string FantasyName { get; set; }

@@ -23,7 +23,10 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Repositories
         }
 
         public async Task<IEnumerable<Organization>> GetAllAsync()
-            => await _context.Organizations.AsNoTracking().ToListAsync();
+            => await _context.Organizations
+                .AsNoTracking()
+                .Include(e => e.Address)
+                .ToListAsync();
 
         public async Task<Organization> GetByIdAsync(int id)
             => await _context.Organizations
@@ -33,7 +36,9 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Repositories
 
         public async Task AddAsync(Organization organization)
         {
-            _context.Organizations.Add(organization);
+            _context.Entry(organization.Address).State = EntityState.Unchanged;
+            await _context.Organizations.AddAsync(organization);
+            await _context.SaveChangesAsync();
 
             if (organization.IsCompany)
                 await _companyRepository.AddAsync(new Company { OrganizationId = organization.Id });
@@ -46,7 +51,6 @@ namespace BoxTI.DojoIntegrado.Infrastructure.Data.Repositories
         public async Task UpdateAsync(Organization organization)
         {
             _context.Organizations.Update(organization);
-
             await _context.SaveChangesAsync();
         }
 

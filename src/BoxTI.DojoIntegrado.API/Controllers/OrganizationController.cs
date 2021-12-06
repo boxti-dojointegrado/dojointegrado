@@ -29,7 +29,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
             {
                 var organizations = await _organizationRepository.GetAllAsync();
 
-                return Ok(_mapper.Map<IEnumerable<OrganizationDTO>>(organizations));
+                return Ok(_mapper.Map<IEnumerable<GetOrganizationDTO>>(organizations));
             }
             catch (Exception ex)
             {
@@ -44,7 +44,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
             {
                 var organization = await _organizationRepository.GetByIdAsync(id);
 
-                return Ok(_mapper.Map<OrganizationDTO>(organization));
+                return Ok(_mapper.Map<GetOrganizationDTO>(organization));
             }
             catch (Exception ex)
             {
@@ -53,7 +53,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrganizationDTO request)
+        public async Task<IActionResult> Post([FromBody] PostOrganizationDTO request)
         {
             try
             {
@@ -68,7 +68,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] OrganizationDTO request)
+        public async Task<IActionResult> Put([FromBody] GetOrganizationDTO request)
         {
             try
             {
