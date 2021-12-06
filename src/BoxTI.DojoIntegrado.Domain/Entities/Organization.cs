@@ -1,4 +1,6 @@
-﻿namespace BoxTI.DojoIntegrado.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BoxTI.DojoIntegrado.Domain.Entities;
 
 public class Organization : BaseEntity
 {
@@ -11,4 +13,7 @@ public class Organization : BaseEntity
     public virtual Address Address { get; set; }
     public virtual Ngo Ngo { get; set; }
     public virtual Company Company { get; set; }
+
+    [NotMapped]
+    public bool IsCompany { get; set; }
 }

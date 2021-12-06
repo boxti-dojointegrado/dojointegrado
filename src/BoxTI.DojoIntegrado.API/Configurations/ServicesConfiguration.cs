@@ -11,6 +11,8 @@ public static class ServicesConfiguration
         services.AddScoped<IAddressRepository, AddressRepository>();
         services.AddScoped<ICompanyRepository, CompanyRepository>();
         services.AddScoped<INgoRepository, NgoRepository>();
+        services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+
         services.AddAutoMapper(typeof(MappingProfile));
 
         return services;
