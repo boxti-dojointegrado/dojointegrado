@@ -2,6 +2,7 @@
 using BoxTI.DojoIntegrado.Domain.Entities;
 using BoxTI.DojoIntegrado.Infrastructure.Data.Repositories.Interfaces;
 using BoxTI.DojoIntegrado.Services.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoxTI.DojoIntegrado.API.Controllers
@@ -23,6 +24,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             try
@@ -38,6 +40,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -53,6 +56,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] PostOrganizationDTO request)
         {
             try
@@ -68,7 +72,8 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] GetOrganizationDTO request)
+        [Authorize]
+        public async Task<IActionResult> Put([FromBody] PostOrganizationDTO request)
         {
             try
             {
@@ -83,6 +88,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             try
