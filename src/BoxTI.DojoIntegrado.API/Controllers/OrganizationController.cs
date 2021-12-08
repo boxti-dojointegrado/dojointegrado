@@ -2,6 +2,7 @@
 using BoxTI.DojoIntegrado.Domain.Entities;
 using BoxTI.DojoIntegrado.Infrastructure.Data.Repositories.Interfaces;
 using BoxTI.DojoIntegrado.Services.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoxTI.DojoIntegrado.API.Controllers
@@ -23,13 +24,14 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var organizations = await _organizationRepository.GetAllAsync();
 
-                return Ok(_mapper.Map<IEnumerable<OrganizationDTO>>(organizations));
+                return Ok(_mapper.Map<IEnumerable<GetOrganizationDTO>>(organizations));
             }
             catch (Exception ex)
             {
@@ -38,13 +40,14 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
             {
                 var organization = await _organizationRepository.GetByIdAsync(id);
 
-                return Ok(_mapper.Map<OrganizationDTO>(organization));
+                return Ok(_mapper.Map<GetOrganizationDTO>(organization));
             }
             catch (Exception ex)
             {
@@ -53,7 +56,8 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrganizationDTO request)
+        [Authorize]
+        public async Task<IActionResult> Post([FromBody] PostOrganizationDTO request)
         {
             try
             {
@@ -68,7 +72,8 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] OrganizationDTO request)
+        [Authorize]
+        public async Task<IActionResult> Put([FromBody] PostOrganizationDTO request)
         {
             try
             {
@@ -83,6 +88,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             try

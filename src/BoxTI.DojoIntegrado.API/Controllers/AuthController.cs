@@ -2,6 +2,7 @@
 using BoxTI.DojoIntegrado.API.Models.Response;
 using BoxTI.DojoIntegrado.Domain.Entities;
 using BoxTI.DojoIntegrado.Domain.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BoxTI.DojoIntegrado.API.Controllers
@@ -25,6 +26,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterRequest registerRequest)
         {
             if (PasswordDontMatchWithConfirmation(registerRequest))
@@ -48,6 +50,7 @@ namespace BoxTI.DojoIntegrado.API.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<UserResponse>> Login([FromBody] LoginRequest loginRequest)
         {
             var logedinUser = await _userRepository.GetByEmail(loginRequest.Email);

@@ -10,7 +10,11 @@ namespace BoxTI.DojoIntegrado.Services.AutoMapper
         {
             CreateMap<Address, AddressDTO>().ReverseMap();
 
-            CreateMap<Organization, OrganizationDTO>()
+            CreateMap<Organization, GetOrganizationDTO>()
+                .ForMember(e => e.AddressDTO, dest => dest.MapFrom(src => src.Address))
+                .ReverseMap();
+
+            CreateMap<Organization, PostOrganizationDTO>()
                 .ForMember(e => e.AddressDTO, dest => dest.MapFrom(src => src.Address))
                 .ReverseMap();
 
