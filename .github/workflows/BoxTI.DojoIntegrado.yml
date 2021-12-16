@@ -18,4 +18,4 @@ jobs:
       - name: Install Dependencies
         run: dotnet restore ./BoxTI.DojoIntegrado.sln
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./BoxTI.DojoIntegrado.sln --configuration Release --no-restore
