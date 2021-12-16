@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+  boxti.dojointegrado.mysql:
+    container_name: boxti.dojointegrado.mysql
+    environment:
+      MYSQL_DATABASE: "dojointegrado-db"
+      MYSQL_USER: "admin"
+      MYSQL_PASSWORD: "admin1q2w3e"
+      MYSQL_ROOT_PASSWORD: "admin1q2w3e"
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysqldb_data:/var/lib/mysql
+
+  adminer:
+    container_name: adminer
+    ports:
+      - "8080:8080"
+
+  boxti.dojointegrado.api:
+    container_name: boxti.dojointegrado.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:dojointegradodb=server=boxti.dojointegrado.mysql; port=3306; userid=root; password=admin1q2w3e; database=dojointegrado-db"
+    ports:
+      - "8000:80"
+    #volumes:
+    #  - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    #  - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

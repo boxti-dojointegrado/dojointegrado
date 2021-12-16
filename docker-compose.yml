@@ -1,12 +1,17 @@
-services:
+version: '3.4'
 
-  dojointegrado-db:
-    container_name: dojointegrado_db
-    image: mysql
-    volumes:
-      - "./.mysql-data/db:/var/lib/mysql"
-    restart: always
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: 1q2w3e4r
+services:
+  boxti.dojointegrado.mysql:
+    image: mysql:5.7
+
+  adminer:
+    image: adminer
+
+  boxti.dojointegrado.api:
+    image: ${DOCKER_REGISTRY-}boxtidojointegradoapi
+    build:
+      context: .
+      dockerfile: src/BoxTI.DojoIntegrado.API/Dockerfile
+
+volumes:
+  mysqldb_data:
